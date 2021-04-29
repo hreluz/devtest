@@ -3,19 +3,11 @@
 namespace App\Policies;
 
 use App\Models\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\Vehicle;
 
 class VehiclePolicy
 {
-    use HandlesAuthorization;
-
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
+    public function select(?User $user, Vehicle $vehicle) {
+        return $vehicle->status == Vehicle::STATUS_AVAILABLE;
     }
 }

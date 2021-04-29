@@ -40,11 +40,12 @@ class SelectCarTest extends TestCase
 
         $vehicle = Vehicle::first();
         //Selecting car
-        $this->postJson(route('api.v1.select_vehicle', $vehicle->id ));
+        $response   = $this->postJson(route('api.v1.select_vehicle', $vehicle->id ));
+        $content    = $response->decodeResponseJson();
+        $this->assertEquals($content['success'], true);
 
         //Selecting same car
-        $response = $this->postJson(route('api.v1.select_vehicle', $vehicle->id ));
-        $content = $response->decodeResponseJson();
-        $this->assertEquals($content['success'], false);
+        $response   = $this->postJson(route('api.v1.select_vehicle', $vehicle->id ));
+        $response->assertStatus(403);
     }
 }

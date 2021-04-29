@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\v1\Vehicle\SelectRequest;
 use App\Models\Vehicle;
 use App\Repositories\Vehicle\VehicleRepositoryInterface;
-use Illuminate\Http\Request;
 
 class SelectVehicleController extends Controller
 {
@@ -19,10 +19,11 @@ class SelectVehicleController extends Controller
     }
 
     /**
+     * @param SelectRequest $request
      * @param Vehicle $vehicle
      * @return array|false[]
      */
-    public function select_vehicle(Vehicle $vehicle) {
+    public function select_vehicle(SelectRequest $request, Vehicle $vehicle) {
         return [
             'success' => $this->repository->selectVehicle($vehicle)
         ];

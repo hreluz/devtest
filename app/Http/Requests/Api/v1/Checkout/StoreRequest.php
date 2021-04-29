@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api\v1;
+namespace App\Http\Requests\Api\v1\Checkout;
 
 use App\Models\Checkout;
 use Illuminate\Foundation\Http\FormRequest;
 use Gate;
 
-class StoreCheckoutRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

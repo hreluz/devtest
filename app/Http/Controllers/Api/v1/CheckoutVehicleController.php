@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\v1\StoreCheckoutRequest;
+use App\Http\Requests\Api\v1\Checkout\StoreRequest;
 use App\Models\Vehicle;
 use App\Repositories\Checkout\CheckoutRepositoryInterface;
 use App\Repositories\Vehicle\VehicleRepositoryInterface;
@@ -28,11 +28,11 @@ class CheckoutVehicleController extends Controller
     /**
      * Checkout Vehicle
      *
-     * @param StoreCheckoutRequest $request
+     * @param StoreRequest $request
      * @param Vehicle $vehicle
      * @return array
      */
-    public function checkout_vehicle(StoreCheckoutRequest $request, Vehicle $vehicle) {
+    public function checkout_vehicle(StoreRequest $request, Vehicle $vehicle) {
         $request->merge(['vehicle_id' => $vehicle->id]);
         $response = $this->checkoutRepository->create($request->all());
 

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api\v1;
+namespace App\Http\Requests\Api\v1\Checkout;
 
-use App\Models\Vehicle;
+use App\Models\Checkout;
 use Illuminate\Foundation\Http\FormRequest;
+use Gate;
 
-class UpdateCheckoutRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +15,7 @@ class UpdateCheckoutRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->vehicle->status === Vehicle::STATUS_CHECKED_OUT &&  $this->vehicle->current_checkout;
+        return Gate::allows('update', [Checkout::class,$this->route('vehicle')]);
     }
 
     /**

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\v1\UpdateCheckoutRequest;
+use App\Http\Requests\Api\v1\Checkout\UpdateRequest;
 use App\Models\Vehicle;
 use App\Repositories\Checkout\CheckoutRepositoryInterface;
 use App\Repositories\Vehicle\VehicleRepositoryInterface;
-use Illuminate\Http\Request;
 
 class CheckoutVehicleBackController extends Controller
 {
@@ -27,11 +26,11 @@ class CheckoutVehicleBackController extends Controller
     }
 
     /**
-     * @param UpdateCheckoutRequest $request
+     * @param UpdateRequest $request
      * @param Vehicle $vehicle
      * @return false[]
      */
-    public function checkout_vehicle_back(UpdateCheckoutRequest $request, Vehicle $vehicle) {
+    public function checkout_vehicle_back(UpdateRequest $request, Vehicle $vehicle) {
         $request->merge(['datetime_check_back' => date('Y-m-d H:i:s')]);
         $response = $this->checkoutRepository->update($request->all(), $vehicle->current_checkout->id);
 
