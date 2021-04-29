@@ -4,8 +4,6 @@ namespace Tests\Feature\Api;
 
 use App\Models\Vehicle;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SelectCarTest extends TestCase

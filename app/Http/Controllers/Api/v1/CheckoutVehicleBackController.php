@@ -24,7 +24,7 @@ class CheckoutVehicleBackController extends Controller
         }
 
         return [
-            'success' => false
+            'success' => $response
         ];
     }
 }

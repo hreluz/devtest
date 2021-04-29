@@ -20,12 +20,15 @@ class CheckBackTest extends TestCase
         $this->assertNull(Checkout::first()->datetime_check_back);
 
         $response = $this->putJson(route('api.v1.checkout_vehicle_back', $vehicle->id));
+        $content = $response->decodeResponseJson();
+
         $response->assertStatus(200);
+        $this->assertEquals($content['success'], true);
         $this->assertNotNull(Checkout::first()->datetime_check_back);
         $this->assertEquals($vehicle->refresh()->status, Vehicle::STATUS_AVAILABLE);
     }
 
-    public function test_check_vehicle_can_be_back() {
+    public function test_check_vehicle_cannot_be_back_because_it_does_not_have_checkout() {
         $this->createVehicles();
         $vehicle = Vehicle::first();
         $response = $this->putJson(route('api.v1.checkout_vehicle_back', $vehicle->id));
