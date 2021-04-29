@@ -17,22 +17,11 @@ class Vehicle extends Model
         'name', 'brand'
     ];
 
-
     /**
-     * Change status of the car
+     * Gets the current checkout the vehicle has, if it exists
      *
-     * @param $status
-     * @return bool|void
+     * @return Model|\Illuminate\Database\Eloquent\Relations\HasMany|object|null
      */
-    public function changeStatus($status) {
-        if(!in_array($status, [self::STATUS_AVAILABLE, self::STATUS_BUSY, self::STATUS_CHECKED_OUT])) {
-            return ;
-        }
-
-        $this->status = $status;
-        return $this->save();
-    }
-
     public function getCurrentCheckoutAttribute() {
         if($this->status != self::STATUS_CHECKED_OUT || !$this->checkouts()->whereNull('datetime_check_back')->exists()){
             return null;

@@ -9,7 +9,7 @@ class ListVehiclesTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public function test_lists_cars_in_api() {
+    public function test_lists_vehicles_in_api() {
         $this->createVehicles();
 
         $response = $this->getJson(route('api.v1.list_vehicles'));

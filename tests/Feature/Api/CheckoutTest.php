@@ -16,13 +16,7 @@ class CheckoutTest extends TestCase
         $vehicle = Vehicle::first();
         $this->assertDatabaseCount('checkouts', 0);
 
-        $response = $this->postJson(route('api.v1.checkout_vehicle', $vehicle->id), [
-            'customer_name' => 'Customer X',
-            'datetime'      => date('Y-m-d H:i:s'),
-            'price'         => rand(15, 90) * 10000,
-            'seller'        => 'Seller Y',
-            'payment_method' => Checkout::PAYMENT_CASH
-        ]);
+        $response = $this->postJson(route('api.v1.checkout_vehicle', $vehicle->id), $this->checkoutData());
 
         $response->assertStatus(200);
         $this->assertDatabaseHas('checkouts', [
@@ -50,8 +44,9 @@ class CheckoutTest extends TestCase
     public function test_vehicle_is_not_already_checkout() {
         $this->createVehicles();
         $vehicle = Vehicle::first();
-        $vehicle->changeStatus(Vehicle::STATUS_CHECKED_OUT);
-        $this->assertEquals($vehicle->status, Vehicle::STATUS_CHECKED_OUT);
+
+        $this->postJson(route('api.v1.checkout_vehicle', $vehicle->id), $this->checkoutData());
+        $this->assertEquals($vehicle->refresh()->status, Vehicle::STATUS_CHECKED_OUT);
 
         $response = $this->postJson(route('api.v1.checkout_vehicle', $vehicle->id), [
             'customer_name' => 'Customer X',
@@ -61,5 +56,22 @@ class CheckoutTest extends TestCase
             'payment_method' => Checkout::PAYMENT_CASH
         ]);
         $response->assertStatus(403);
+    }
+
+    /**
+     *
+     * Default Data
+     *
+     * @return array
+     */
+    private function checkoutData()
+    {
+        return [
+            'customer_name' => 'Customer X',
+            'datetime'      => date('Y-m-d H:i:s'),
+            'price'         => rand(15, 90) * 10000,
+            'seller'        => 'Seller Y',
+            'payment_method' => Checkout::PAYMENT_CASH
+        ];
     }
 }
