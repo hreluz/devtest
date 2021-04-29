@@ -32,4 +32,22 @@ class Vehicle extends Model
         $this->status = $status;
         return $this->save();
     }
+
+    public function getCurrentCheckoutAttribute() {
+        if($this->status != self::STATUS_CHECKED_OUT || !$this->checkouts()->whereNull('datetime_check_back')->exists()){
+            return null;
+        }
+
+        return $this->checkouts()->whereNull('datetime_check_back')->first();
+    }
+
+    /**
+     * Relationships
+     */
+
+    public function checkouts() {
+        return $this->hasMany(Checkout::class);
+    }
+
+
 }

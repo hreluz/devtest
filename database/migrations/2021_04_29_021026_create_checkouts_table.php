@@ -20,6 +20,7 @@ class CreateCheckoutsTable extends Migration
             $table->bigInteger('price');
             $table->string('seller');
             $table->string('payment_method');
+            $table->dateTime('datetime_check_back')->nullable();
             $table->unsignedBigInteger('vehicle_id')->nullable();
 
             $table->foreign('vehicle_id')
