@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\VehicleResource;
 use App\Models\Vehicle;
 
 class ListVehiclesController extends Controller
@@ -12,7 +13,7 @@ class ListVehiclesController extends Controller
      */
     public function list() {
         return [
-            'data' => Vehicle::get()->toArray()
+            'data' =>  VehicleResource::collection(Vehicle::get())
         ];
     }
 }
