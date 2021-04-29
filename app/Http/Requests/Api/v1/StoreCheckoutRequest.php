@@ -3,8 +3,8 @@
 namespace App\Http\Requests\Api\v1;
 
 use App\Models\Checkout;
-use App\Models\Vehicle;
 use Illuminate\Foundation\Http\FormRequest;
+use Gate;
 
 class StoreCheckoutRequest extends FormRequest
 {
@@ -15,7 +15,8 @@ class StoreCheckoutRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->vehicle->status != Vehicle::STATUS_CHECKED_OUT;
+        return Gate::allows('create', [Checkout::class,$this->route('vehicle')]);
+
     }
 
     /**
